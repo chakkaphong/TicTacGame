@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script type="text/javascript" src="/eel.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <h1 style="text-align: center;">Tic tac toe game</h1>
+    <form>
+      <div class="column">
+      <div class="col-12">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a
+            class="list-group-item list-group-item-action active"
+            id="list-home-list"
+            data-toggle="list"
+            href="#list-game"
+            role="tab"
+            aria-controls="home"
+            onclick="changSizeBoard(3)"
+            >3x3Board</a
+          >
+          <a
+            class="list-group-item list-group-item-action "
+            id="list-home-list"
+            data-toggle="list"
+            href="#list-game"
+            role="tab"
+            aria-controls="home"
+            onclick="changSizeBoard(4)"
+            >4x4Board</a
+          >
+          <a
+            class="list-group-item list-group-item-action"
+            id="list-profile-list"
+            data-toggle="list"
+            href="#list-history"
+            role="tab"
+            aria-controls="profile"
+            onclick="getHistory()"
+            >History</a
+          >
+          <a
+            class="list-group-item list-group-item-action"
+            id="list-messages-list"
+            data-toggle="list"
+            href="#list-top"
+            role="tab"
+            onclick="LeaderBoard()"
+            aria-controls="messages"
+            >TopScore</a
+          >
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="list-game"
+            role="tabpanel"
+            aria-labelledby="list-home-list"
+          >
+            <div class="row">
+              <div class="col-sm-4" style="text-align: center">
+                <h2>Player1(X)</h2>
+                <h2 id="ScoreP1"></h2>
+              </div>
+              <div class="col-sm-4" style="text-align: center">
+                <h2>TIE</h2>
+                <h2 id="Tie"></h2>
+              </div>
+              <div class="col-sm-4" style="text-align: center">
+                <h2>Player2(O)</h2>
+                <h1 id="ScoreP2"></h1>
+              </div>
+              <button onclick="init()" type="submit" class="btn btn-primary" style="float: right;">
+                Reset
+              </button>
+            </div>
+            <h5 id="ternPlayer" style="text-align: center;">Player 1 turn</h5>
+            <table class="table table-bordered">
+              <thead>
+                <tr></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope="row">
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck1"
+                        id="label1"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck2"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck2"
+                        id="label2"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck3"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck3"
+                        id="label3"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                  <td id="td-4">
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck4"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck4"
+                        id="label4"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td scope="row">
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck5"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck5"
+                        id="label5"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck6"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck6"
+                        id="label6"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                   <td>
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck7"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck7"
+                        id="label7"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                  <td id="td-8">
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck8"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck8"
+                        id="label8"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td score="row" >
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck9"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck9"
+                        id="label9"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                  <td >
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck10"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck10"
+                        id="label10"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                  <td >
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck11"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck11"
+                        id="label11"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                  <td id="td-12">
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck12"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck12"
+                        id="label12"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+                <tr id="td-13">
+                  <td score="row">
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck13"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck13"
+                        id="label13"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                   </td>
+                  <td id="td-14"> 
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck14"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck14"
+                        id="label14"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                   </td>
+                  <td id="td-15">
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck15"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck15"
+                        id="label15"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                   </td>
+                  <td id="td-16">
+                    <div
+                      class="form-group form-check"
+                      style="text-align: center"
+                    >
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="exampleCheck16"
+                        onclick="change()"
+                        hidden
+                      />
+                      <label
+                        for="exampleCheck16"
+                        id="label16"
+                        style="
+                          cursor: pointer;
+                          color: rgba(33, 33, 33, 1);
+                          height: 150px;
+                          width: 150px;
+                          text-align: center;
+                          padding: 25px 0;
+                        "
+                        class="display-3"
+                      >
+                      </label>
+                    </div>
+                   </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="list-history"
+            role="tabpanel"
+            aria-labelledby="list-profile-list"
+          >
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">MatchRound</th>
+                  <th scope="col">Match</th>
+                  <th scope="col">Result</th>
+                  <th scope="col">Duration</th>
+                  <th scope="col">Size</th>
+                </tr>
+              </thead>
+              <tbody id="data">
+
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="list-top"
+            role="tabpanel"
+            aria-labelledby="list-messages-list"
+          >
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Win</th>
+                <th scope="col">Draw</th>
+                <th scope="col">Lose</th>
+              </tr>
+            </thead>
+            <tbody id="data-top">
+
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+  </body>
+</html>
+  <script type="text/javascript">
+        var clicked1 = false;
+        var clicked2 = false;
+        var clicked3 = false;
+        var clicked4 = false;
+        var clicked5 = false;
+        var clicked6 = false;
+        var clicked7 = false;
+        var clicked8 = false;
+        var clicked9 = false;
+        var clicked10 = false;
+        var clicked11 = false;
+        var clicked12 = false;
+        var clicked13 = false;
+        var clicked14 = false;
+        var clicked15 = false;
+        var clicked16 = false;
+        var p1 = true;
+        var p2 = false;
+        var p1Board = [];
+        var p2Board = [];
+        var sizeBoard = 3;
+
+      const init =() =>{
+        clicked1 = false;
+        clicked2 = false;
+        clicked3 = false;
+        clicked4 = false;
+        clicked5 = false;
+        clicked6 = false;
+        clicked7 = false;
+        clicked8 = false;
+        clicked9 = false;
+        clicked10 = false;
+        clicked11 = false;
+        clicked12 = false;
+        clicked13 = false;
+        clicked14 = false;
+        clicked15 = false;
+        clicked16 = false;
+        document.querySelector("#exampleCheck1").checked = false;
+        document.querySelector("#exampleCheck2").checked = false;
+        document.querySelector("#exampleCheck3").checked = false;
+        document.querySelector("#exampleCheck4").checked = false;
+        document.querySelector("#exampleCheck5").checked = false;
+        document.querySelector("#exampleCheck7").checked = false;
+        document.querySelector("#exampleCheck8").checked = false;
+        document.querySelector("#exampleCheck9").checked = false;
+        document.querySelector("#exampleCheck10").checked = false;
+        document.querySelector("#exampleCheck11").checked = false;
+        document.querySelector("#exampleCheck6").checked = false;
+        document.querySelector("#exampleCheck12").checked = false;
+        document.querySelector("#exampleCheck13").checked = false;
+        document.querySelector("#exampleCheck14").checked = false;
+        document.querySelector("#exampleCheck15").checked = false;
+        document.querySelector("#exampleCheck16").checked = false;
+        document.getElementById("label1").innerText = " ";
+        document.getElementById("label2").innerText = " ";
+        document.getElementById("label3").innerText = " ";
+        document.getElementById("label4").innerText = " ";
+        document.getElementById("label5").innerText = " ";
+        document.getElementById("label6").innerText = " ";
+        document.getElementById("label7").innerText = " ";
+        document.getElementById("label8").innerText = " ";
+        document.getElementById("label9").innerText = " ";
+        document.getElementById("label10").innerText = " ";
+        document.getElementById("label11").innerText = " ";
+        document.getElementById("label12").innerText = " ";
+        document.getElementById("label13").innerText = " ";
+        document.getElementById("label14").innerText = " ";
+        document.getElementById("label15").innerText = " ";
+        document.getElementById("label16").innerText = " ";
+        p1 = true;
+        p2 = false;
+        p1Board = [];
+        p2Board = [];
+        eel.getScore()().then((r) =>{
+          updateScore(r);
+        });
+      }
+      init();
+      const updateScore = (param) =>{
+        if(param == null) return
+        stateLabel = true;
+        scoreP1 = param[0]
+        scoreP2 = param[1]
+        roundWinP1 = param[2]
+        roundWinP2 = param[3]
+        tieScore = param[4]
+        isLoad = param[5]
+        document.getElementById("ScoreP1").innerText = scoreP1;
+        document.getElementById("ScoreP2").innerText = scoreP2;
+        document.getElementById("Tie").innerText = tieScore;
+        if((roundWinP1 == true || roundWinP2 == true) && isLoad == false){
+          alert(`Player ${(roundWinP1 == true) ? ('1'):('2')} is won`);
+          disableLable();
+        }       
+      }
+      const disableLable = () =>{
+         clicked1 = true;
+         clicked2 = true;
+         clicked3 = true;
+         clicked4 = true;
+         clicked5 = true;
+         clicked6 = true;
+         clicked7 = true;
+         clicked8 = true;
+         clicked9 = true;
+         clicked10 = true;
+         clicked11 = true;
+         clicked12 = true;
+         clicked13 = true;
+         clicked14 = true;
+         clicked15 = true;
+         clicked16 = true;
+      }
+
+      const changSizeBoard = (size) =>{
+          if(size == 3 ){
+            sizeBoard = 3;
+            init();
+            document.getElementById("td-4").style.backgroundColor = "#DCDCDC";
+            document.getElementById("td-8").style.backgroundColor = "#DCDCDC";
+            document.getElementById("td-12").style.backgroundColor = "#DCDCDC";
+            document.getElementById("td-13").style.backgroundColor = "#DCDCDC";
+            document.getElementById("td-14").style.backgroundColor = "#DCDCDC";
+            document.getElementById("td-15").style.backgroundColor = "#DCDCDC";
+            document.getElementById("td-16").style.backgroundColor = "#DCDCDC";
+            clicked4 = true;
+            clicked8 = true;
+            clicked12 = true;
+            clicked13 = true;
+            clicked14 = true;
+            clicked15 = true;
+            clicked16 = true;
+          }
+        if(size == 4){
+          sizeBoard = 4;
+          document.getElementById("td-4").style.backgroundColor = "#FFFFFF";
+          document.getElementById("td-8").style.backgroundColor = "#FFFFFF";
+          document.getElementById("td-12").style.backgroundColor = "#FFFFFF";
+          document.getElementById("td-13").style.backgroundColor = "#FFFFFF";
+          document.getElementById("td-14").style.backgroundColor = "#FFFFFF";
+          document.getElementById("td-15").style.backgroundColor = "#FFFFFF";
+          document.getElementById("td-16").style.backgroundColor = "#FFFFFF";
+          init();
+        }
+      }
+      changSizeBoard(3);
+      const getHistory = () =>{
+          var temp = "";
+          var round = 0;
+          var winMatch = "";
+          var matchSize = "";
+          eel.getHistory()().then((r)=>{
+            if(r.length > 0 ){
+             r.forEach((res) => {
+              round += 1;
+              if(res[0] == 0)winMatch = "Player 1 Won";
+              if(res[0] == 1)winMatch = "Player 2 Won";
+              if(res[0] == 2)winMatch = "Draw";
+              if(res[2] == 3)matchSize ="3x3"
+              if(res[2] == 4)matchSize ="4x4"
+              temp +="<tr>";
+              temp +="<td>"+round+"</td>";
+              temp +="<td>"+"Player 1 vs Player 2"+"</td>";
+              temp +="<td>"+winMatch+"</td>";
+              temp +="<td>"+res[1]+" ms."+"</td>";
+              temp +="<td>"+matchSize+"</td>"+"</tr>";
+             });
+             document.getElementById("data").innerHTML = temp;
+            }
+          });
+        
+      }
+      const LeaderBoard = () =>{
+        var player = "";
+        var temp = "";
+        eel.getTopScore()().then((r)=>{
+          if(r.length > 0){
+            r.forEach((res) =>{
+              if(res[0] == 0)player ="Player 1";
+              if(res[0] == 1)player ="Player 2";
+              temp +="<tr>";
+              temp +="<td>"+player+"</td>";
+              temp +="<td>"+res[1]+"</td>";
+              temp +="<td>"+res[2]+"</td>";
+              temp +="<td>"+((res[3]-res[2])-res[1])+"</td>";
+              temp +="</tr>";
+            })
+             document.getElementById("data-top").innerHTML = temp;
+          }
+        });
+      }
+
+      function change() {
+        var chk1 = document.querySelector("#exampleCheck1").checked;
+        var chk2 = document.querySelector("#exampleCheck2").checked;
+        var chk3 = document.querySelector("#exampleCheck3").checked;
+        var chk4 = document.querySelector("#exampleCheck4").checked;
+        var chk5 = document.querySelector("#exampleCheck5").checked;
+        var chk6 = document.querySelector("#exampleCheck6").checked;
+        var chk7 = document.querySelector("#exampleCheck7").checked;
+        var chk8 = document.querySelector("#exampleCheck8").checked;
+        var chk9 = document.querySelector("#exampleCheck9").checked;
+        var chk10 = document.querySelector("#exampleCheck10").checked;
+        var chk11 = document.querySelector("#exampleCheck11").checked;
+        var chk12 = document.querySelector("#exampleCheck12").checked;
+        var chk13 = document.querySelector("#exampleCheck13").checked;
+        var chk14 = document.querySelector("#exampleCheck14").checked;
+        var chk15 = document.querySelector("#exampleCheck15").checked;
+        var chk16 = document.querySelector("#exampleCheck16").checked;
+
+        if (chk1 === true && clicked1 === false) {
+          if (p1 == true) {
+            document.getElementById("label1").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(1);
+          } else {
+            document.getElementById("label1").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+            p1 = true;
+            p2 = false;
+            p2Board.push(1);
+          }
+          clicked1 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk2 === true && clicked2 === false) {
+          if (p1 == true) {
+            document.getElementById("label2").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(2);
+          } else {
+            document.getElementById("label2").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+            p1 = true;
+            p2 = false;
+            p2Board.push(2);
+          }
+          clicked2 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk3 === true && clicked3 === false) {
+          if (p1 == true) {
+            document.getElementById("label3").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(3);
+          } else {
+            document.getElementById("label3").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+            p1 = true;
+            p2 = false;
+            p2Board.push(3);
+          }
+          clicked3 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk4 === true && clicked4 === false) {
+          if (p1 == true) {
+            document.getElementById("label4").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(4);
+          } else {
+            document.getElementById("label4").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+            p1 = true;
+            p2 = false;
+            p2Board.push(4);
+          }
+          clicked4 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk5 === true && clicked5 === false) {
+          if (p1 == true) {
+            document.getElementById("label5").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";;
+            p1 = false;
+            p2 = true;
+            p1Board.push(5);
+          } else {
+            document.getElementById("label5").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+            p1 = true;
+            p2 = false;
+            p2Board.push(5);
+          }
+          clicked5 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+              updateScore(r);
+            });
+        }
+        if (chk6 === true && clicked6 === false) {
+          if (p1 == true) {
+            document.getElementById("label6").innerText = "X";
+            
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(6);
+          } else {
+            document.getElementById("label6").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+            p1 = true;
+            p2 = false;
+            p2Board.push(6);
+          }
+          clicked6 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+              updateScore(r);
+            });
+        }
+        if (chk7 === true && clicked7 === false) {
+          if (p1 == true) {
+            document.getElementById("label7").innerText = "X";
+            
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(7);
+          } else {
+            document.getElementById("label7").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+            p1 = true;
+            p2 = false;
+            p2Board.push(7);
+          }
+          clicked7 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+              updateScore(r);
+            });
+        }
+        if (chk8 === true && clicked8 === false) {
+          if (p1 == true) {
+            document.getElementById("label8").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(8);
+          } else {
+            document.getElementById("label8").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+            p1 = true;
+            p2 = false;
+            p2Board.push(8);
+          }
+          clicked8 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+              updateScore(r);
+            });
+        }
+        if (chk9 === true && clicked9 === false) {
+          if (p1 == true) {
+            document.getElementById("label9").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(9);
+          } else {
+            document.getElementById("label9").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+
+            p1 = true;
+            p2 = false;
+            p2Board.push(9);
+          }
+          clicked9 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk10 === true && clicked10 === false) {
+          if (p1 == true) {
+            document.getElementById("label10").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(10);
+          } else {
+            document.getElementById("label10").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+
+            p1 = true;
+            p2 = false;
+            p2Board.push(10);
+          }
+          clicked10 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk11 === true && clicked11 === false) {
+          if (p1 == true) {
+            document.getElementById("label11").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(11);
+          } else {
+            document.getElementById("label11").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+
+            p1 = true;
+            p2 = false;
+            p2Board.push(11);
+          }
+          clicked11 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk12 === true && clicked12 === false) {
+          if (p1 == true) {
+            document.getElementById("label12").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(12);
+          } else {
+            document.getElementById("label12").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+
+            p1 = true;
+            p2 = false;
+            p2Board.push(12);
+          }
+          clicked12 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk13 === true && clicked13 === false) {
+          if (p1 == true) {
+            document.getElementById("label13").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(13);
+          } else {
+            document.getElementById("label13").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+
+            p1 = true;
+            p2 = false;
+            p2Board.push(13);
+          }
+          clicked13 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk14 === true && clicked14 === false) {
+          if (p1 == true) {
+            document.getElementById("label14").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(14);
+          } else {
+            document.getElementById("label14").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+
+            p1 = true;
+            p2 = false;
+            p2Board.push(14);
+          }
+          clicked14 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk15 === true && clicked15 === false) {
+          if (p1 == true) {
+            document.getElementById("label15").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(15);
+          } else {
+            document.getElementById("label15").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+
+            p1 = true;
+            p2 = false;
+            p2Board.push(15);
+          }
+          clicked15 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+        if (chk16 === true && clicked16 === false) {
+          if (p1 == true) {
+            document.getElementById("label16").innerText = "X";
+            document.getElementById("ternPlayer").innerText = "Player 2 turn";
+            p1 = false;
+            p2 = true;
+            p1Board.push(16);
+          } else {
+            document.getElementById("label16").innerText = "O";
+            document.getElementById("ternPlayer").innerText = "Player 1 turn";
+
+            p1 = true;
+            p2 = false;
+            p2Board.push(16);
+          }
+          clicked16 = true;
+          eel
+            .Answer(p1Board, p2Board,sizeBoard)()
+            .then((r) => {
+             updateScore(r);
+            });
+        }
+      }
+    </script>
